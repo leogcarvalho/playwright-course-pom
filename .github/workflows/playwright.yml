@@ -29,7 +29,7 @@ jobs:
       run: mkdir -p reports/allure-results
     
     - name: Run your tests
-      run: pytest --aluredir=reports/allure-results --tracing=retain-on-failure
+      run: pytest --alluredir=reports/allure-results --tracing=retain-on-failure
 
     - name: Upload Allure results
       uses: actions/upload-artifact@v4
