@@ -43,12 +43,13 @@ jobs:
       with:
         name: playwright-traces
         path: test-results/
-          - name: Install Node.js (for allure CLI)
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
 
-    # Gerar relatorio Allure em HTML
+    # Gerar report html Allure
+    - name: Install Node.js (for allure CLI)
+      uses: actions/setup-node@v4
+      with:
+        node-version: 18
+
     - name: Install Java (OpenJDK 11)
       run: sudo apt-get update && sudo apt-get install -y openjdk-11-jre
 
