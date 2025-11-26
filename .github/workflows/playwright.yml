@@ -43,15 +43,25 @@ jobs:
       with:
         name: playwright-traces
         path: test-results/
+          - name: Install Node.js (for allure CLI)
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
 
-    # Build HTML report from allure-results
-    - name: Build Allure HTML report
+    # Gerar relatorio Allure em HTML
+    - name: Install Java (OpenJDK 11)
+      run: sudo apt-get update && sudo apt-get install -y openjdk-11-jre
+
+    - name: Install Allure CLI (npm)
+      run: npm install -g allure-commandline --no-update-notifier --silent
+
+    - name: Build Allure HTML report (local)
       if: ${{ always() }}
-      uses: simple-elf/allure-report-action@v1.7
-      with:
-        gh_pages: ""                     # vazio pois não usamos GitHub Pages aqui
-        allure_results: reports/allure-results
-        allure_history: allure-report    # pasta de saída com o HTML
+      run: |
+        # garante que há resultados
+        ls -la reports/allure-results || true
+        # gera o relatório HTML
+        allure generate reports/allure-results -o allure-report --clean
 
     - name: Upload Allure HTML report (artifact)
       if: ${{ always() }}
