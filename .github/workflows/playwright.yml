@@ -43,3 +43,19 @@ jobs:
       with:
         name: playwright-traces
         path: test-results/
+
+    # Build HTML report from allure-results
+    - name: Build Allure HTML report
+      if: ${{ always() }}
+      uses: simple-elf/allure-report-action@v1.7
+      with:
+        gh_pages: ""                     # vazio pois não usamos GitHub Pages aqui
+        allure_results: reports/allure-results
+        allure_history: allure-report    # pasta de saída com o HTML
+
+    - name: Upload Allure HTML report (artifact)
+      if: ${{ always() }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: allure-report-html
+        path: allure-report
